@@ -1,5 +1,23 @@
 version: "3"
 services:
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - 3306:3306
+
+  elk:
+    image: sebp/elk
+    container_name: elk
+    ports:
+      - "5601:5601" #kibana
+      - "9200:9200" #ES
+      - "5044:5044" #logstash
+
   api:
     image: node:8
     container_name: api
@@ -23,3 +41,5 @@ services:
     ports:
       - "8080:3000"
     command: npm start
+
+
