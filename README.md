@@ -1,1 +1,1 @@
-# devops
+# Devops project for Epitech
