@@ -1,24 +1,46 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+const axios = require("axios");
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      res: null
+    };
+  }
+
+  componentDidMount() {
+    const url = process.env.REACT_APP_API_URL || "localhost";
+    const port = process.env.REACT_APP_API_PORT || 3000;
+
+    console.log(`GET http://${url}:${port}`);
+
+    axios
+      .get(`http://${url}:${port}`)
+      .then(response => {
+        // handle success
+        console.log(response);
+        this.setState({ res: response.data });
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function() {
+        // always executed
+      });
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          {this.state.res ? (
+            <span>{this.state.res}</span>
+          ) : (
+            <span>Loading...</span>
+          )}
         </header>
       </div>
     );
